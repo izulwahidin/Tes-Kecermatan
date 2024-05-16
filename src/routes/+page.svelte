@@ -6,50 +6,40 @@
     const result = writable(false);
     const sessionCountdown = writable(5);
     const countdown = writable(0);
-    let interval; // Declare interval here to make it accessible in cleanup function
+    let interval;
 
     const startApp = () => {
-        countdown.set(3); // Start preparation countdown
-        interval = setInterval(() => {
-            countdown.update(n => {
-                if (n === 1) {
-                    clearInterval(interval);
-                    session.set(1);
-                    runSession();
-                }
-                return n - 1;
-            });
-        }, 1000);
+        startCountdown(3, () => {
+            session.set(1);
+            runSession();
+        });
     };
 
     const runSession = () => {
-        sessionCountdown.set(5); // Reset session countdown
+        sessionCountdown.set(5);
         interval = setInterval(() => {
-            let currentCountdown = get(sessionCountdown);
-
+            const currentCountdown = get(sessionCountdown);
             if (currentCountdown === 1) {
                 clearInterval(interval);
-
-                let currentSession = get(session);
-                if(currentSession == totalSession) result.set(true)
-                if (currentSession < totalSession) {
+                if (get(session) < totalSession) {
                     session.update(n => n + 1);
-                    prepareForNextSession();
+                    startCountdown(3, runSession);
+                } else {
+                    result.set(true);
                 }
-
             } else {
                 sessionCountdown.update(n => n - 1);
             }
         }, 1000);
     };
 
-    const prepareForNextSession = () => {
-        countdown.set(3); // Start preparation countdown for next session
+    const startCountdown = (initialValue, callback) => {
+        countdown.set(initialValue);
         interval = setInterval(() => {
             countdown.update(n => {
                 if (n === 1) {
                     clearInterval(interval);
-                    runSession();
+                    callback();
                 }
                 return n - 1;
             });
@@ -63,7 +53,7 @@
 </script>
 
 {#if $countdown > 0 && !$result}
-    <p>persiapan {$countdown}</p>
+    <p>Persiapan {$countdown}</p>
 {:else if $session !== 0 && !$result}
     <p>Durasi: {$sessionCountdown}</p>
     <p>Sesi: {$session}</p>
