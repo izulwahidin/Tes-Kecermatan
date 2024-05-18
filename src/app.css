@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body{
-    @apply px-5 py-2
+    @apply px-2 py-2 bg-slate-500 text-white min-w-[100vw] min-h-[100vh] grid items-center
 }

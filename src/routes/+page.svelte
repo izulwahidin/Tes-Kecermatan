@@ -40,6 +40,7 @@
 
 
     const startApp = () => {
+        result.set(false)
         startCountdown(3, () => {
             session.set(1);
             runSession();
@@ -92,46 +93,60 @@
     }
 </script>
 
+<div class="grid gap-4 py-5 px-2 max-w-screen-md border-2 rounded mx-[auto] w-full">
 {#if $countdown > 0 && !$result}
-    <p>Persiapan {$countdown}</p>
+    <div class="text-center">
+        <h1 class="text-2xl font-bold">Persiapan {$countdown} detik</h1>
+    </div>
 {:else if $session !== 0 && !$result}
-    <div class="grid gap-4 px-2">
-        <div class="">
-            <h1 class="text-5xl font-bold">Sesi {$session}</h1>
-            <p class="text-sm font-bold">Durasi: {$sessionCountdown} detik</p>
-        </div>
-        <div id="soal" class="flex gap-2 items-center">
-            <h2 class="text-xl font-bold">Soal</h2>
-            <ul class="flex gap-3 font-bold text-center">
-                {#each $rand5 as soal, id}
-                    <li class="border-2 px-6 py-2">
-                        <p class="text-4xl">{soal.toUpperCase()}</p>
-                        <small class="text-sm">{options[id]}</small>
-                    </li>
-                {/each}
-            </ul>
-        </div>
-        <div id="pertanyaan" class="flex gap-2 items-center">
-            <h2 class="text-xl font-bold">Pertanyaan</h2>
-            <ul class="flex gap-3 font-bold">
-                {#each $rand4 as pertanyaan}
-                    <li class="border-2 px-3 py-2">{pertanyaan.toUpperCase()}</li>
-                {/each}
-            </ul>
-        </div>
-        <div id="pilihan_ganda" class="flex gap-2 items-center">
-            <h2 class="text-xl font-bold">Jawaban</h2>
-            <ul class="flex gap-3 font-bold">
-            {#each options as option}
-                <button on:click={() => chooseOption(option)}>
-                    <li class="border-2 px-6 py-2" >{option}</li>
-                </button>
+    
+
+    <div class="">
+        <h1 class="text-5xl font-bold">Sesi {$session}</h1>
+        <p class="text-sm font-bold">Durasi: {$sessionCountdown} detik</p>
+    </div>
+
+    <div id="soal" class="gap-2 items-center md:flex">
+        <h2 class="text-2xl font-bold">Soal</h2>
+        <ul class="flex gap-2 text-2xl font-bold text-center justify-between w-full">
+            {#each $rand5 as soal, id}
+                <li class="border-4 rounded w-full">
+                    <p>{soal.toUpperCase()}</p>
+                    <small class="text-xs font-bold">{options[id]}</small>
+                </li>
             {/each}
-            </ul>
-        </div>
+        </ul>
+    </div>
+    <div id="pertanyaan" class="flex-wrap gap-2 items-center md:flex">
+        <h2 class="text-2xl font-bold">Pertanyaan</h2>
+        <ul class="flex gap-2 text-xl font-bold text-center justify-start">
+            {#each $rand4 as pertanyaan}
+            <!-- {#each 'acvd'.split('') as pertanyaan} -->
+                <li class="border-2 rounded px-3">{pertanyaan.toUpperCase()}</li>
+            {/each}
+        </ul>
+    </div>
+    <div id="pilihan_ganda" class="flex-wrap gap-2 items-center">
+        <h2 class="text-2xl font-bold">Jawaban</h2>
+        <ul class="flex gap-3 text-xl font-bold justify-between w-full">
+        {#each options as option}
+            <button on:click={() => chooseOption(option)} class="w-full rounded-md border-2 px-3 py-1 hover:bg-slate-400">
+                <li>{option}</li>
+            </button>
+        {/each}
+        </ul>
     </div>
 {:else if $result}
-    <p>Hasil Tes: Maintenance!!!!</p>
+    <div class="text-center">
+        <h1 class="text-2xl font-bold">Hasil Tes</h1>
+        <p class="text-md font-bold">Maintenance!!!!</p>
+        <button on:click={startApp} class="px-4 py-2 border-2">Mulai ulang</button>
+    </div>
 {:else}
-    <button on:click={startApp} class="px-4 py-2 border-2">Mulai Tes Kecermatan</button>
+    <div class="text-center">
+        <h1 class="text-2xl font-bold">Selamat Datang di Tes Kecermatan <u>Reswara Pratama</u></h1>
+        <p class="text-md font-bold">Peserta bisa mencoba simulasi Tes Kecermatan pada halaman ini.</p>
+        <button on:click={startApp} class="mt-4 px-4 py-2 border-2">Mulai Tes Kecermatan</button>
+    </div>
 {/if}
+</div>
