@@ -158,7 +158,7 @@
 {:else}
     <div class="text-center">
         <h1 class="text-2xl font-bold">Selamat Datang di Tes Kecermatan <u>Reswara Pratama</u></h1>
-        <p class="text-md font-bold">Peserta bisa mencoba simulasi Tes Kecermatan pada halaman ini.</p>
+        <p class="text-md font-normal">Peserta bisa mencoba simulasi Tes Kecermatan pada halaman ini.</p>
         <button on:click={startApp} class="mt-4 px-4 py-2 border-2">Mulai Tes Kecermatan</button>
     </div>
 {/if}
