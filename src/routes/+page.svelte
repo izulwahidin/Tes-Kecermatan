@@ -2,10 +2,10 @@
 	import { onMount } from 'svelte';
     import { writable, get } from 'svelte/store';
 
-    const totalSession = 2;
+    const totalSession = 3;
     const session = writable(0);
     const result = writable(false);
-    const sessionCountdown = writable(5);
+    const sessionCountdown = writable(10);
     const countdown = writable(0);
 
     const randomList = (model = false) => {
@@ -50,7 +50,7 @@
         rand5.set(randomList())
         rand4.set(last4($rand5))
 
-        sessionCountdown.set(5);
+        sessionCountdown.set(10);
         interval = setInterval(() => {
             const currentCountdown = get(sessionCountdown);
             if (currentCountdown === 1) {
@@ -131,7 +131,7 @@
         </div>
     </div>
 {:else if $result}
-    <p>Hasil Tes:</p>
+    <p>Hasil Tes: Maintenance!!!!</p>
 {:else}
     <button on:click={startApp}>Mulai Tes Kecermatan</button>
 {/if}
