@@ -2,10 +2,11 @@
 	import { onMount } from 'svelte';
     import { writable, get } from 'svelte/store';
 
+    const SESSION_SECOND = 20
     const totalSession = 3;
     const session = writable(0);
     const result = writable(false);
-    const sessionCountdown = writable(10);
+    const sessionCountdown = writable(SESSION_SECOND);
     const countdown = writable(0);
 
     const randomList = (model = false) => {
@@ -51,7 +52,7 @@
         rand5.set(randomList())
         rand4.set(last4($rand5))
 
-        sessionCountdown.set(10);
+        sessionCountdown.set(SESSION_SECOND);
         interval = setInterval(() => {
             const currentCountdown = get(sessionCountdown);
             if (currentCountdown === 1) {
@@ -118,7 +119,7 @@
         </ul>
     </div>
     <div id="pertanyaan" class="flex-wrap gap-2 items-center md:flex">
-        <h2 class="text-2xl font-bold">Pertanyaan</h2>
+        <!-- <h2 class="text-2xl font-bold">Pertanyaan</h2> -->
         <ul class="flex gap-2 text-xl font-bold text-center justify-start">
             {#each $rand4 as pertanyaan}
             <!-- {#each 'acvd'.split('') as pertanyaan} -->
@@ -127,7 +128,7 @@
         </ul>
     </div>
     <div id="pilihan_ganda" class="flex-wrap gap-2 items-center">
-        <h2 class="text-2xl font-bold">Jawaban</h2>
+        <!-- <h2 class="text-2xl font-bold">Jawaban</h2> -->
         <ul class="flex gap-3 text-xl font-bold justify-between w-full">
         {#each options as option}
             <button on:click={() => chooseOption(option)} class="w-full rounded-md border-2 px-3 py-1 hover:bg-slate-400">
