@@ -3,14 +3,26 @@
     import { writable, get } from 'svelte/store';
 
     const SESSION_SECOND = 20
-    const totalSession = 3;
+    const totalSession = 5;
     const session = writable(0);
     const result = writable(false);
     const sessionCountdown = writable(SESSION_SECOND);
     const countdown = writable(0);
+    const model = writable('')
 
-    const randomList = (model = false) => {
-        let rand = 'abcdefghijklmnopqrstuvwxyz'.split('')
+    const randomList = () => {
+        let rand
+        switch ($model) {
+            case 'code':
+                rand = '~!@#$%^&*()-+='.split('')
+                break;
+            case 'int':
+                rand = '1234567890'.split('')
+                break;
+            default:
+                rand = 'abcdefghijklmnopqrstuvwxyz'.split('')
+                break;
+        } 
         shuffle(rand)
         return rand.slice(1).slice(-5);
     }
