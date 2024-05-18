@@ -133,5 +133,5 @@
 {:else if $result}
     <p>Hasil Tes: Maintenance!!!!</p>
 {:else}
-    <button on:click={startApp}>Mulai Tes Kecermatan</button>
+    <button on:click={startApp} class="px-4 py-2 border-2">Mulai Tes Kecermatan</button>
 {/if}
